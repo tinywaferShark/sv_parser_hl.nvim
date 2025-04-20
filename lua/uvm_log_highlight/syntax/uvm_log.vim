@@ -36,3 +36,12 @@ highlight default link uvmBinNumber Constant
 highlight default link uvmHexDataValue Constant
 highlight default link uvmDecDataValue Constant
 highlight default link uvmBinDataValue Constant
+" syntax keyword uvmInfo UVM_INFO
+" syntax keyword uvmError UVM_ERROR
+" syntax match uvmTime "@ \d\+"
+" syntax match uvmNumber "'[hdbo][0-9a-fA-FxXzZ]\+"
+
+" highlight default link uvmInfo Keyword
+" highlight default link uvmError Error
+" highlight default link uvmTime Number
+" highlight default link uvmNumber Constant
