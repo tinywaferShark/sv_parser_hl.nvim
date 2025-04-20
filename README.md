@@ -1,4 +1,3 @@
-
 # nvim-uvm-log-highlight
 
 一个用于 Neovim 的插件，专门用于高亮显示 UVM 日志文件中的关键字，并提供额外的日志文件浏览功能，如折叠、跳转等。
@@ -25,15 +24,19 @@
 ### vim-plug 示例
 
 ```vim
-Plug 'yourusername/nvim-uvm-log-highlight'
+Plug 'tinywaferShark/nvim-uvm-log-highlight'
 ```
 
 ### packer.nvim 示例
 
 ```lua
-use 'yourusername/nvim-uvm-log-highlight'
+use 'tinywaferShark/nvim-uvm-log-highlight'
 ```
 
+### 使用 lazy 示例
+```lua
+"tinywaferShark/sv_parser_hl.nvim",
+```
 安装后，重启 Neovim 并运行插件管理器的更新或安装命令，例如 `:PlugInstall` 或 `:PackerSync`。
 
 ## 使用说明
@@ -101,6 +104,24 @@ use 'yourusername/nvim-uvm-log-highlight'
 // 仿真结束日志
 100.444 ns : UVM_INFO @ uvm_report_server.svh(60) : uvm_report_server :: Total errors = 1, warnings = 1.
 ```
+
+## TODO List
+
+插件后续计划支持以下功能，欢迎关注和参与：
+
+1. **cfg 相关高亮**
+   - 支持识别并高亮包含 `cfg`、`config`、`set_config`、`uvm_config_db#(...)` 等关键词的内容。
+
+2. **模块日志过滤**
+   - 支持只显示特定模块（如 `uvm_test_top.env.agent1`）的日志，便于聚焦分析。
+
+3. **可配置高亮项**
+   - 用户可通过 Lua table 自定义需高亮的关键词及对应颜色，满足不同团队/项目需求。
+
+4. **虚拟文本增强**
+   - 利用 `nvim_buf_set_extmark` 在日志行旁以虚拟文本形式显示额外信息或标志（如重要性、标记等）。
+
+如有更多建议，欢迎在 issue 区留言！
 
 ## 贡献
 
