@@ -5,17 +5,26 @@ syntax keyword uvmError UVM_ERROR
 " 匹配时间格式（例如：@ 12345）
 syntax match uvmTime "@ \d\+"
 
+
 " 匹配十六进制数值（例如：0xDEADBEEF）
 syntax match uvmHexNumber "0x[0-9A-Fa-f]\+"
 
-" 匹配十进制数值（例如：123456）
-syntax match uvmDecNumber "\<\d\+\>"
 
-" 匹配二进制数值（例如：0b01010101）
-syntax match uvmBinNumber "0b[01]\+"
+" 匹配二进制数值（例如：0b01010101 或 0b01010101.）
+syntax match uvmBinNumber "0[bB][01]\+\(\.[01]*\)\?"
 
-" 匹配带前缀的数值（例如：'h7F7F7F, 'd123456, 'b101010）
-syntax match uvmDataValue "'[hdbo]\d\+" 
+" 匹配带前缀的数值：
+" 'h 后面都是16进制数据（例如：'h7F7F7F）
+syntax match uvmHexDataValue "'[hH][0-9A-Fa-f]\+\(\.[0-9A-Fa-f]\+\)\?"
+
+" 'd 后面都是十进制数据（例如：'d123456）
+syntax match uvmDecDataValue "'[dD]\d\+\(\.\d\+\)\?"
+
+" 'b 后面都是2进制数据（例如：'b101010）
+syntax match uvmBinDataValue "'[bB][01]\+\(\.[01]\+\)\?"
+
+" 删除或注释掉原来的通用规则
+" syntax match uvmDataValue "'[hdboHDOB][0-9A-Fa-f]\+\(\.[0-9A-Fa-f]\+\)\?"
 
 " 设置高亮
 highlight default link uvmInfo Keyword
@@ -24,4 +33,6 @@ highlight default link uvmTime Number
 highlight default link uvmHexNumber Constant
 highlight default link uvmDecNumber Constant
 highlight default link uvmBinNumber Constant
-highlight default link uvmDataValue Constant
+highlight default link uvmHexDataValue Constant
+highlight default link uvmDecDataValue Constant
+highlight default link uvmBinDataValue Constant
