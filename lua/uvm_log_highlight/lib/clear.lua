@@ -1,11 +1,4 @@
--- ~/.config/nvim/lua/uvmlog_clear/init.lua
--- 或者如果你使用包管理器，可能是 ~/.config/nvim/plugged/uvmlog_clear.nvim/lua/uvmlog_clear/init.lua 等
-
 local M = {}
-
--- print("--- Loading uvm_log_highlight.lib.clear ---")
-vim.notify("--- Loading uvm_log_highlight.lib.clear ---", vim.log.levels.INFO)
--- print(">>> [uvmlog_clear] lib/clear.lua loaded")
 
 -- 默认配置
 local config = {
@@ -16,55 +9,48 @@ local config = {
   }
 }
 
--- 根据配置动态构建正则表达式模式
--- 模式解释:
--- ((prefix1|prefix2|...).-) : 捕获组 1 - 匹配整个前缀路径部分 (包括最后一个 /)
---   (prefix1|prefix2|...)  : 捕获组 2 - 匹配配置中的任意一个前缀
---   .-                     : 非贪婪匹配前缀和文件名之间的任何字符
--- ([^/\\ ]+)             : 捕获组 3 - 匹配最后一个 / 后面的非斜杠、非反斜杠、非空格的字符序列 (即文件名)
--- 替换为 "%3" 意味着只保留捕获组 3 (文件名)
-local function build_pattern()
-  if not config.prefixes or #config.prefixes == 0 then
-    return nil
-  end
-  -- 对前缀进行转义，以防包含特殊正则字符 (虽然例子中没有)
-  local escaped_prefixes = {}
+local function build_patterns()
+  local patterns = {}
   for _, p in ipairs(config.prefixes) do
-    table.insert(escaped_prefixes, vim.pesc(p)) -- vim.pesc 用于转义 Lua 模式特殊字符
+    table.insert(patterns, string.format("(%s)([^\n ]+)", vim.pesc(p)))
   end
-  local prefix_pattern_part = table.concat(escaped_prefixes, "|")
-  -- 构建最终的 Lua pattern
-  return string.format("((%s).-)([^/\\ ]+)", prefix_pattern_part)
+  return patterns
 end
 
--- 清理当前 buffer 中指定前缀的路径
 function M.clear_paths()
-  local pattern = build_pattern()
-  if not pattern then
+  local patterns = build_patterns()
+  print("当前patterns:", vim.inspect(patterns))
+  if not patterns or #patterns == 0 then
     vim.notify("UvmlogClear: 没有配置路径前缀", vim.log.levels.WARN)
     return
   end
 
   local bufnr = vim.api.nvim_get_current_buf()
-
-  -- 使用 vim.schedule 包装 API 调用是一个好习惯
   vim.schedule(function()
     local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
     local modified_lines = {}
     local changed = false
 
     for i, line in ipairs(lines) do
-      -- 使用 string.gsub 进行替换，它会返回新字符串和替换次数
-      local new_line, count = line:gsub(pattern, "%3") -- %3 对应文件名的捕获组
+      print("匹配前:", line)
+      local new_line = line
+      local count = 0
+      for _, pattern in ipairs(patterns) do
+        new_line, c = new_line:gsub(pattern, function(prefix, path)
+          local filename = path:match("([^/]+)$")
+          print("需要替换的字符串:", filename)
+          return filename or path
+        end)
+        count = count + c
+      end
+      print("匹配后:", new_line, "替换次数:", count)
       modified_lines[i] = new_line
       if count > 0 then
-        changed = true -- 标记至少有一行被修改了
+        changed = true
       end
     end
 
-    -- 只有在实际发生更改时才写回 buffer
     if changed then
-      -- 替换整个 buffer 内容
       vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, modified_lines)
       vim.notify("UvmlogClear: 路径已清理", vim.log.levels.INFO)
     else

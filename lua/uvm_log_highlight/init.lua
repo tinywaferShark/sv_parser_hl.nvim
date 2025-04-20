@@ -9,7 +9,7 @@ end
 
 -- 加载各模块（根据需要在开启 uvm_log 文件时调用）
 local function init_modules()
-  -- require("uvm_log_highlight.lib.clear").setup()  -- 新增：注册 Uvmlog_clear 命令
+  require("uvm_log_highlight.lib.clear").setup()  -- 新增：注册 Uvmlog_clear 命令
   require("uvm_log_highlight.lib.filter").setup()
   require("uvm_log_highlight.lib.jump").setup()
   require("uvm_log_highlight.lib.folding").setup()
