@@ -1,5 +1,9 @@
 local M = {}
 
+local config = {
+  max_file_mb = 100, -- 默认最大文件大小（MB）
+}
+
 -- 加载语法文件
 local function load_syntax()
   vim.notify("--- syntax uvm_log_highlight ---", vim.log.levels.INFO)
@@ -19,10 +23,27 @@ local function init_modules()
   require("uvm_log_highlight.lib.refresh").setup()
   require("uvm_log_highlight.lib.debug").setup()
   require("uvm_log_highlight.lib.feedback").setup()
-  
 end
 
-function M.setup()
+function M.setup(user_config)
+  config = vim.tbl_deep_extend("force", config, user_config or {})
+
+  -- 文件大小检测
+  vim.api.nvim_create_autocmd({ "BufReadPre" }, {
+    pattern = "*.log",
+    callback = function(args)
+      local file = args.file
+      local stat = vim.loop.fs_stat(file)
+      if stat and stat.size and stat.size > config.max_file_mb * 1024 * 1024 then
+        vim.notify(
+          string.format("文件过大（%.2f MB），已禁止打开！", stat.size / 1024 / 1024),
+          vim.log.levels.ERROR
+        )
+        vim.cmd("bd!") -- 关闭当前 buffer
+      end
+    end,
+  })
+
   -- 文件类型设置
   vim.opt.runtimepath:append("~/Projects/uvm_log_highlight/lua/uvm_log_highlight")
   vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
@@ -43,26 +64,3 @@ function M.setup()
 end
 
 return M
-
--- lua/plugins/nvim-uvm-log-highlight/init.lua
--- local M = {}
-
--- function M.setup()
-
---   vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
---     pattern = "*.log",
---     callback = function()
---       vim.cmd("set filetype=uvm_log")
---     end,
---   })
-
---   vim.api.nvim_create_autocmd("FileType", {
---     pattern = "uvm_log",
---     callback = function()
---       vim.notify("--- syntax uvm_log_highlight ---", vim.log.levels.INFO)
---       vim.cmd("runtime syntax/uvm_log.vim")
---     end,
---   })
--- end
-
--- return M
