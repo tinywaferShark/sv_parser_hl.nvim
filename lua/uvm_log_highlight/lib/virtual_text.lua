@@ -1,11 +1,11 @@
 local M = {}
 
 local default_virtual_text = {
-  info = {
-    words = { "UVM_INFO" },
-    text = "[INFO]",
-    hl_group = "Comment"
-  },
+  -- info = {
+  --   words = { "UVM_INFO" },
+  --   text = "[INFO]",
+  --   hl_group = "Comment"
+  -- },
   warning = {
     words = { "UVM_WARNING" },
     text = "[WARN]",
