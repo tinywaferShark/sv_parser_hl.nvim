@@ -85,7 +85,7 @@ function M.setup(user_config)
   -- 'force' 表示用户配置会覆盖默认值
   config = vim.tbl_deep_extend("force", config, user_config or {})
   -- 你可以在这里添加其他初始化逻辑，例如检查配置是否有效
-  vim.notify("UvmlogClear: 配置已加载", vim.log.levels.DEBUG) -- 使用 DEBUG 级别，避免打扰用户
+  -- vim.notify("UvmlogClear: 配置已加载", vim.log.levels.DEBUG) -- 使用 DEBUG 级别，避免打扰用户
 end
 
 return M
