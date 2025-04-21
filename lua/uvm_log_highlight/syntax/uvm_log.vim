@@ -1,14 +1,14 @@
 " Highlight UVM log elements
 syntax keyword uvmInfo UVM_INFO
 syntax keyword uvmError UVM_ERROR
+syntax keyword uvmFatal UVM_FATAL
+syntax keyword uvmWarning UVM_WARNING
 
 " 匹配时间格式（例如：@ 12345）
 syntax match uvmTime "@ \d\+"
 
-
 " 匹配十六进制数值（例如：0xDEADBEEF）
 syntax match uvmHexNumber "0x[0-9A-Fa-f]\+"
-
 
 " 匹配二进制数值（例如：0b01010101 或 0b01010101.）
 syntax match uvmBinNumber "0[bB][01]\+\(\.[01]*\)\?"
@@ -29,6 +29,8 @@ syntax match uvmBinDataValue "'[bB][01]\+\(\.[01]\+\)\?"
 " 设置高亮
 highlight default link uvmInfo Keyword
 highlight default link uvmError Error
+highlight default link uvmFatal Error
+highlight default link uvmWarning Error
 highlight default link uvmTime Number
 highlight default link uvmHexNumber Constant
 highlight default link uvmDecNumber Constant
@@ -36,12 +38,7 @@ highlight default link uvmBinNumber Constant
 highlight default link uvmHexDataValue Constant
 highlight default link uvmDecDataValue Constant
 highlight default link uvmBinDataValue Constant
-" syntax keyword uvmInfo UVM_INFO
-" syntax keyword uvmError UVM_ERROR
-" syntax match uvmTime "@ \d\+"
-" syntax match uvmNumber "'[hdbo][0-9a-fA-FxXzZ]\+"
 
-" highlight default link uvmInfo Keyword
-" highlight default link uvmError Error
-" highlight default link uvmTime Number
-" highlight default link uvmNumber Constant
+highlight uvmError ctermfg=Red guifg=#FF0000 cterm=bold gui=bold
+highlight uvmFatal ctermfg=Red guifg=#FF0000 cterm=bold gui=bold
+highlight uvmWarning ctermfg=Yellow guifg=#FFD700 cterm=bold gui=bold
