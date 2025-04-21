@@ -43,7 +43,7 @@ function M.setup(user_config)
   })
 
   -- 添加 runtimepath
-  vim.opt.runtimepath:append("~/Projects/uvm_log_highlight/lua/uvm_log_highlight")
+  -- vim.opt.runtimepath:append("~/Projects/uvm_log_highlight/lua/uvm_log_highlight")
 
   -- 文件类型设置
   vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
