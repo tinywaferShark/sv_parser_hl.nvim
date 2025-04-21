@@ -61,7 +61,7 @@ end
 
 -- 注册用户命令 (如果尚未注册)
 if not _G.__uvmlog_clear_cmd_registered then
-  print(">>> [uvmlog_clear] Registering UvmlogClear command")
+  -- print(">>> [uvmlog_clear] Registering UvmlogClear command")
   vim.api.nvim_create_user_command(
     "UvmlogClear", -- 命令名称
     function()
