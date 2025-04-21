@@ -1,27 +1,31 @@
 // uvm log sample file
 
 // 仿真启动日志
-10.000 ns : uvm_info @ testbench.sv(45) : uvm_test_top :: simulation starting...
+10.000 ns : UVM_INFO @ testbench.sv(45) : uvm_test_top :: simulation starting...
 
 // 初始化阶段
-20.123 ns : uvm_info @ uvm_component.svh(123) : testbench.subsystem :: component initialized.
-30.456 ns : uvm_warning @ uvm_component.svh(130) : testbench.subsystem :: potential issue detected during initialization.
+20.123 ns : UVM_INFO @ uvm_component.svh(123) : testbench.subsystem :: component initialized.
+30.456 ns : UVM_WARNING @ uvm_component.svh(130) : testbench.subsystem :: potential issue detected during initialization.
 
 // 执行仿真过程
-50.789 ns : uvm_info @ uvm_transaction.svh(75) : testbench.subsystem.agent.agent_env :: transaction started.
-60.000 ns : uvm_error @ uvm_driver.svh(90) : testbench.subsystem.agent.driver :: packet dropped due to timeout.
-70.111 ns : uvm_info @ uvm_scoreboard.svh(110) : testbench.subsystem.agent.scoreboard :: checking transaction response.
+50.789 ns : UVM_INFO @ uvm_transaction.svh(75) : testbench.subsystem.agent.agent_env :: transaction started.
+60.000 ns : UVM_ERROR @ uvm_driver.svh(90) : testbench.subsystem.agent.driver :: packet dropped due to timeout.
+60.000 ns : UVM_FATAL @ uvm_driver.svh(90) : testbench.subsystem.agent.driver :: packet dropped due to timeout fatal.
+70.111 ns : UVM_INFO @ uvm_scoreboard.svh(110) : testbench.subsystem.agent.scoreboard :: checking transaction response.
 
 // 收尾阶段
-80.222 ns : uvm_info @ uvm_component.svh(130) : testbench.subsystem :: component shutdown sequence initiated.
-90.333 ns : uvm_info @ testbench.sv(150) : uvm_test_top :: simulation finished.
+80.222 ns : UVM_INFO @ uvm_component.svh(130) : testbench.subsystem :: component shutdown sequence initiated.
+90.333 ns : UVM_INFO @ testbench.sv(150) : uvm_test_top :: simulation finished.
 
 // 仿真结束日志
-100.444 ns : uvm_info @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 1, warnings = 1.
-100.444 ns : uvm_info @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 'd1, warnings =  0xffff1.
-100.444 ns : uvm_info @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 'd1, warnings =  0xffff5.
-100.444 ns : uvm_info @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 'd1, warnings =  0xfeaf4b5.
-100.444 ns : uvm_info @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 'd1, warnings = 'hffff5.
-100.444 ns : uvm_info @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 'd1, warnings = 'b0101010101.
-100.444 ns : uvm_info @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 'd1, warnings = 'd6799305623.
+100.444 ns : UVM_INFO @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 1, warnings = 1.
+100.444 ns : UVM_INFO @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 'd1, warnings =  0xffff1.
+100.444 ns : UVM_INFO @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 'd1, warnings =  0xffff5.
+100.444 ns : UVM_INFO @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 'd1, warnings =  0xfeaf4b5.
+100.444 ns : UVM_INFO @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 'd1, warnings = 'hffff5.
+100.444 ns : UVM_INFO @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 'd1, warnings = 'b0101010101.
+100.444 ns : UVM_INFO @ uvm_report_server.svh(60) : uvm_report_server :: total errors = 'd1, warnings = 'd6799305623.
 uvm_info /ic/eda_tools/synopsys/dw_ip_all/dw_ip_vv-2023.09/vip/svt/common/u-2023.03/sverilog/src/vcs/svt_env.svp(719) @ 1.000ns: uvm_test_top.env.axi_system_env [display_checked_out_features] vip vendor: synopsys, vip suite: amba-base, vip license: vip-amb
+UVM_INFO verilog_src/uvm-1.2/src/base/uvm_root.svh(406) @ 0: reporter [RNTST] Running test test_example...
+UVM_WARNING something.sv(123) @ 100: my_comp [MYCOMP] This is a warning message.
+UVM_ERROR another_file.sv(45) @ 200: reporter [UVM/COMP/FAILURE] Test failed due to error.

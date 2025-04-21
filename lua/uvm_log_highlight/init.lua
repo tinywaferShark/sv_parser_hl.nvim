@@ -1,19 +1,15 @@
 local M = {}
 
 local config = {
-  max_file_mb = 100, -- 默认最大文件大小（MB）
+  max_file_mb = 100,
 }
 
--- 加载语法文件
 local function load_syntax()
-  vim.notify("--- syntax uvm_log_highlight ---", vim.log.levels.INFO)
-  vim.notify("--- syntax uvm_log_highlight12123 ---", vim.log.levels.INFO)
-  vim.cmd("source /home/shark/Projects/uvm_log_highlight/lua/uvm_log_highlight/syntax/uvm_log.vim")
+  vim.cmd("runtime syntax/uvm_log.vim")
 end
 
--- 加载各模块（根据需要在开启 uvm_log 文件时调用）
 local function init_modules()
-  require("uvm_log_highlight.lib.clear").setup()  -- 新增：注册 Uvmlog_clear 命令
+  require("uvm_log_highlight.lib.clear").setup()
   require("uvm_log_highlight.lib.filter").setup()
   require("uvm_log_highlight.lib.jump").setup()
   require("uvm_log_highlight.lib.folding").setup()
@@ -24,6 +20,8 @@ local function init_modules()
   require("uvm_log_highlight.lib.debug").setup()
   require("uvm_log_highlight.lib.feedback").setup()
 end
+
+local virtual_text = require("uvm_log_highlight.lib.virtual_text")
 
 function M.setup(user_config)
   config = vim.tbl_deep_extend("force", config, user_config or {})
@@ -44,8 +42,10 @@ function M.setup(user_config)
     end,
   })
 
-  -- 文件类型设置
+  -- 添加 runtimepath
   vim.opt.runtimepath:append("~/Projects/uvm_log_highlight/lua/uvm_log_highlight")
+
+  -- 文件类型设置
   vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = "*.log",
     callback = function()
@@ -53,12 +53,13 @@ function M.setup(user_config)
     end,
   })
 
-  -- 对 uvm_log 文件加载语法与初始化各模块
+  -- 对 uvm_log 文件加载语法、初始化模块、应用虚拟文本
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "uvm_log",
-    callback = function()
+    callback = function(args)
       load_syntax()
       init_modules()
+      virtual_text.apply_virtual_text(args.buf, user_config and user_config.virtual_text)
     end,
   })
 end

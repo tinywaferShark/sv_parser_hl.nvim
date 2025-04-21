@@ -2,7 +2,7 @@
 local multiview = {}
 
 function multiview.setup()
-  print("Setting up multiview module")
+  -- print("Setting up multiview module")
   vim.cmd([[command! UVMMultiView lua require("uvm_log_highlight.lib.multiview").open_views(vim.fn.expand('%:p'))]])
   vim.cmd([[command! UVMCloseViews lua require("uvm_log_highlight.lib.multiview").close_views()]])
 end
