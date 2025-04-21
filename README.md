@@ -120,6 +120,9 @@ use 'tinywaferShark/nvim-uvm-log-highlight'
 
 4. **虚拟文本增强**
    - 利用 `nvim_buf_set_extmark` 在日志行旁以虚拟文本形式显示额外信息或标志（如重要性、标记等）。
+  
+5. SDF warning、编译error、warning高亮显示
+6. 设置当文件超过512M的时候就不允许打开（可以配置文件大小限制）。
 
 如有更多建议，欢迎在 issue 区留言！
 
