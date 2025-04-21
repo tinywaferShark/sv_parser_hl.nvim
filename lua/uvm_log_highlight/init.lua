@@ -47,7 +47,7 @@ function M.setup(user_config)
 
   -- 文件类型设置
   vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = "*.log",
+    pattern = { "*.log", "test_status.hud" },  -- 支持 .log 和 test_status.hud
     callback = function()
       vim.cmd("set filetype=uvm_log")
     end,
