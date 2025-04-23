@@ -4,11 +4,11 @@ local config = {
   max_file_mb = 100,
 }
 
-local function load_syntax()
-  vim.cmd("runtime syntax/uvm_log.vim")
-end
+local syntax = require("uvm_log_highlight.syntax")
+local virtual_text = require("uvm_log_highlight.lib.virtual_text")
 
 local function init_modules()
+  syntax.load()
   require("uvm_log_highlight.lib.clear").setup()
   -- require("uvm_log_highlight.lib.filter").setup()
   -- require("uvm_log_highlight.lib.jump").setup()
@@ -21,7 +21,7 @@ local function init_modules()
   -- require("uvm_log_highlight.lib.feedback").setup()
 end
 
-local virtual_text = require("uvm_log_highlight.lib.virtual_text")
+
 
 function M.setup(user_config)
   config = vim.tbl_deep_extend("force", config, user_config or {})
@@ -46,7 +46,7 @@ function M.setup(user_config)
   -- vim.opt.runtimepath:append("~/Projects/uvm_log_highlight/lua/uvm_log_highlight")
   -- 文件类型设置
   vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.log", "test_status.hud" },  -- 支持 .log 和 test_status.hud
+    pattern = { "*.log", "test_status.hud" },
     callback = function()
       vim.cmd("set filetype=uvm_log")
     end,
@@ -56,7 +56,6 @@ function M.setup(user_config)
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "uvm_log",
     callback = function(args)
-      load_syntax()
       init_modules()
       virtual_text.apply_virtual_text(args.buf, user_config and user_config.virtual_text)
     end,
