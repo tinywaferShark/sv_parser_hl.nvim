@@ -28,7 +28,7 @@ local default_virtual_text = {
     words = { "= fail" }, -- 这里可以写成更宽松的 "fail"
     text = "[FAIL]",
     hl_group = "ErrorMsg",
-    position = "start",
+    position = "end",
   },
 }
 
